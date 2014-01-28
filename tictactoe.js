@@ -163,6 +163,7 @@
       if (game.winner()) {
         console.log(game.winner(), "won");
         alert(game.winner().toUpperCase() + " won!");
+        document.location.reload(true);
       }
     } else {
       console.log(game.player, "made an invalid move");
