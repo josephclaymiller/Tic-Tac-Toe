@@ -1,5 +1,3 @@
-// NB: This doesn't include any AI.
-
 (function (root) {
 
   var TTT = root.TTT = (root.TTT || {});
@@ -10,7 +8,7 @@
     this.board = this.makeBoard();
   }
 
-  Game.marks = ["x", "o"];
+  Game.marks = ["X", "O"];
   Game.playerColors = ["red", "blue"];
 
   Game.prototype.diagonalWinner = function () {
@@ -136,6 +134,20 @@
       this.diagonalWinner() || this.horizontalWinner() || this.verticalWinner()
     );
   };
+  
+  Game.prototype.isOver = function () {
+    var game = this;
+    function isMark (square) {
+      var hasMark = (square === Game.marks[0] || square === Game.marks[1]);
+      return hasMark;
+    }
+    function fullRow (row) {
+      var isFullRow = _(row).all(isMark);
+      return isFullRow;
+    }
+    var gameOver = _(game.board).all(fullRow); 
+    return gameOver;
+  };
 
   Game.prototype.printBoard = function () {
     var game = this;
@@ -164,19 +176,22 @@
         console.log(game.winner(), "won");
         alert(game.winner().toUpperCase() + " won!");
         document.location.reload(true);
+      } else if (game.isOver()) {  
+        console.log("Game over");
+        alert("It is a tie.")
+        document.location.reload(true);
       }
     } else {
       console.log(game.player, "made an invalid move");
-      alert("Invalid move, you are " + game.player + ". Please try again.");
+      alert("Invalid move player " + game.player + ". Please try again.");
     }
-
 
   }
 
 })(this);
 
 
-// First we instantiate a new object with the this.TTT.Game() constructor function.
+// instantiate a new TTT game object
 var TTT = new this.TTT.Game();
 
 $(function () {
