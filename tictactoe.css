@@ -10,11 +10,12 @@
   color: #EEE;
   background-color: #EEE;
   box-sizing: border-box;
+  -moz-box-sizing: border-box; /*Firefox*/
+  -webkit-box-sizing: border-box; /*Chrome,Safari*/
   border-radius: 50%;
 }
 
 .row {
-  /*width: 335px;*/
   display: block;
   clear: both;
 }
